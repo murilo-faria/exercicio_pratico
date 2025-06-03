@@ -1,0 +1,74 @@
+
+tarefas = []
+
+proximo_id = 1
+
+
+def adicionar_tarefa():
+    global proximo_id
+    descricao = input("Digite a descrição da tarefa: ")
+
+    tarefa = {
+        "id": proximo_id,
+        "descricao": descricao,
+        "status": "Pendente"
+    }
+
+    tarefas.append(tarefa)  
+    print("Tarefa adicionada com sucesso!\n")
+    proximo_id += 1  
+
+def listar_tarefas():
+    if len(tarefas) == 0:
+        print("Nenhuma tarefa cadastrada.\n")
+    else:
+        print("Lista de Tarefas:")
+        for tarefa in tarefas:
+            print(f"ID: {tarefa['id']} | Descrição: {tarefa['descricao']} | Status: {tarefa['status']}")
+        print()
+
+def marcar_concluida():
+    if len(tarefas) == 0:
+        print("Não há tarefas para marcar como concluída.\n")
+        return
+
+    try:
+        id_desejado = int(input("Digite o ID da tarefa a ser marcada como concluída: "))
+    except ValueError:
+        print("Por favor, digite um número válido.\n")
+        return
+
+    for tarefa in tarefas:
+        if tarefa["id"] == id_desejado:
+            if tarefa["status"] == "Concluída":
+                print("Essa tarefa já está concluída.\n")
+            else:
+                tarefa["status"] = "Concluída"
+                print("Tarefa marcada como concluída!\n")
+            return
+
+    print("Tarefa com esse ID não foi encontrada.\n")
+
+def menu():
+    while True:
+        print("===== MENU =====")
+        print("1 - Adicionar Nova Tarefa")
+        print("2 - Listar Todas as Tarefas")
+        print("3 - Marcar Tarefa como Concluída")
+        print("4 - Sair")
+
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == "1":
+            adicionar_tarefa()
+        elif opcao == "2":
+            listar_tarefas()
+        elif opcao == "3":
+            marcar_concluida()
+        elif opcao == "4":
+            print("Encerrando o programa. Até logo!")
+            break
+        else:
+            print("Opção inválida. Tente novamente.\n")
+
+menu()
